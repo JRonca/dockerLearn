@@ -1,4 +1,6 @@
-FROM node:18-slim
+# Build
+
+FROM node:18-alpine3.19
 
 WORKDIR  /usr/src/app
 
@@ -11,6 +13,8 @@ RUN yarn
 COPY . .
 
 RUN yarn run build
+
+# Execução
 
 EXPOSE 3000
 
