@@ -1,0 +1,1 @@
+FROM jronca/docker-node-example:latest
