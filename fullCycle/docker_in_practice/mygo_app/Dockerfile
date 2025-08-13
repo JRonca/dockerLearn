@@ -1,14 +1,16 @@
 FROM golang:latest AS builder
 
 WORKDIR /app
-
 COPY . .
-
 RUN CGO_ENABLED=0 go build -o server main.go
 
 # Final stage
 FROM scratch
 
-COPY --from=builder /app/server /server
+LABEL maintainer="jronca"
+LABEL env="production"
+# LABEL traefik.enable="true"
 
-CMD ["./server"]
+COPY --from=builder /app/server /server
+ENTRYPOINT ["./server"]
+CMD ["8080"]
