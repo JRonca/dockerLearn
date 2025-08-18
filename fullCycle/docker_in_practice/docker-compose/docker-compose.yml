@@ -9,6 +9,10 @@ services:
         condition: service_healthy
     volumes:
       - ./node:/app
+    environment:
+      - PORT=3000
+    env_file:
+      - ./node/.env
     networks:
       - backend
       - db-net
