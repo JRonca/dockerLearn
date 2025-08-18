@@ -16,6 +16,8 @@ services:
     networks:
       - backend
       - db-net
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   nginx:
     image: nginx:latest
