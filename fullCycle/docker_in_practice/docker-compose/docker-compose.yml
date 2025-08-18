@@ -7,8 +7,18 @@ services:
     depends_on:
       mongo:
         condition: service_healthy
-    volumes:
-      - ./node:/app
+    develop:
+      watch:
+        - path: ./node
+          target: /app
+          action: sync
+          ignore:
+            - "./node/node_modules"
+        - path: ./node/package.json
+          action: rebuild
+        - path: ./node/index.js
+          target: /app/index.js
+          action: sync+restart
     environment:
       - PORT=3000
     env_file:
