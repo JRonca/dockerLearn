@@ -9,6 +9,9 @@ services:
         condition: service_healthy
     volumes:
       - ./node:/app
+    networks:
+      - backend
+      - db-net
 
   nginx:
     image: nginx:latest
@@ -16,6 +19,8 @@ services:
       - "80:80"
     volumes:
       - ./nginx-html:/usr/share/nginx/html
+    networks:
+      - frontend
 
   mongo:
     image: mongo:latest
@@ -25,3 +30,15 @@ services:
       timeout: 5s
       retries: 5
       start_period: 10s
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - db-net
+
+volumes:
+  mongo_data:
+
+networks:
+  db-net:
+  backend:
+  frontend:
