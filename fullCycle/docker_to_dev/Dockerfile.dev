@@ -1,0 +1,13 @@
+FROM node:22.18.0-slim
+
+RUN apt-get update && apt install -y \
+  curl && \
+  npm install -g nodemon
+
+# debian
+# RUN useradd -m -u 1000 xpto
+
+# alpine
+# RUN adduser -D -u 1000 xpto
+
+USER node
