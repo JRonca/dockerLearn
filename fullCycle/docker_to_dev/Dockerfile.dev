@@ -11,3 +11,10 @@ RUN apt-get update && apt install -y \
 # RUN adduser -D -u 1000 xpto
 
 USER node
+
+WORKDIR /home/node/app
+
+COPY package*.json ./
+RUN npm install
+
+EXPOSE 3000
