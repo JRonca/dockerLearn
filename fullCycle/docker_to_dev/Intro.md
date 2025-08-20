@@ -112,3 +112,26 @@ docker run -v $(pwd):/home/node/app -v /home/node/app/node_modules my-image-node
 ```docker
 EXPOSE 3000
 ```
+
+# CMD VS ENTRYPOINT
+
+- O CMD e o ENTRYPOINT são instruções do Dockerfile que definem o comando que será executado quando um container é iniciado.
+- A principal diferença entre eles é que o CMD é apenas um comando padrão que pode ser sobrescrito, enquanto o ENTRYPOINT é um comando que sempre será executado.
+- Em geral, recomenda-se usar o ENTRYPOINT para definir o comando principal da aplicação e o CMD para definir argumentos padrão que podem ser sobrescritos.
+- Se usarmos apenas o Entrypoint e passarmos algo ao rodar a imagem, isto entrará como argumento do Entrypoint.
+- Há a possibilidade de utilizar os 2 em conjunto
+
+```docker
+# Exemplo de uso do CMD
+CMD ["npm", "start"]
+
+# Exemplo de uso do ENTRYPOINT
+ENTRYPOINT ["npm", "start"]
+```
+
+- Para desenvolvimento usaremos o CMD para permitir a sobrescrição do comando.
+- Rodaremos apenas o comando `tail -f /dev/null` para manter o container rodando, enquanto o código é editado na máquina host.
+
+```docker
+CMD ["tail", "-f", "/dev/null"]
+```
