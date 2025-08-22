@@ -4,6 +4,9 @@ RUN apt-get update && apt install -y \
   curl && \
   npm install -g nodemon
 
+COPY start.sh /
+RUN chmod +x /start.sh
+
 # debian
 # RUN useradd -m -u 1000 xpto
 
@@ -14,9 +17,12 @@ USER node
 
 WORKDIR /home/node/app
 
-COPY --chown=node:node package*.json ./
-RUN npm install
+# COPY --chown=node:node package*.json ./
+# RUN npm install
 
 EXPOSE 3000
 
-CMD ["tail", "-f", "/dev/null"]
+# CMD ["tail", "-f", "/dev/null"]
+# CMD ["sh", "-c", "npm install && tail -f /dev/null"]
+
+CMD [ "/start.sh" ]
