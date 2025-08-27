@@ -11,6 +11,8 @@ services:
       - "3000:3000"
     env_file:
       - .env
+      - path: .env.override
+        required: false
 
   db:
     image: mysql:8.0.30-debian
