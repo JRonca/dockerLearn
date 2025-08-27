@@ -9,11 +9,11 @@ services:
       - .:/home/node/app
     ports:
       - "3000:3000"
+    env_file:
+      - .env
 
   db:
     image: mysql:8.0.30-debian
     environment:
       - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=app_db
-      - MYSQL_USER=user
-      - MYSQL_PASSWORD=pass
+      - MYSQL_DATABASE=my_database
