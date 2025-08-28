@@ -16,6 +16,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    networks:
+      - external-api_default
 
   db:
     image: mysql:8.0.30-debian
@@ -28,3 +30,9 @@ services:
       timeout: 5s # Tempo limite para o Healthcheck
       retries: 5 # Tentativas antes de considerar o container como unhealthy
       start_period: 10s # Tempo de espera antes de iniciar o Healthcheck
+    networks:
+      - external-api_default
+
+networks:
+  external-api_default:
+    external: true
