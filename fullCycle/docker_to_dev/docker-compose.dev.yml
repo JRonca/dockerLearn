@@ -11,11 +11,20 @@ services:
       - "3000:3000"
     env_file:
       - .env
-      - path: .env.override
-        required: false
+      # - path: .env.override
+      #   required: false
+    depends_on:
+      db:
+        condition: service_healthy
 
   db:
     image: mysql:8.0.30-debian
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=my_database
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 30s # Frequencia em que o Healthcheck é executado
+      timeout: 5s # Tempo limite para o Healthcheck
+      retries: 5 # Tentativas antes de considerar o container como unhealthy
+      start_period: 10s # Tempo de espera antes de iniciar o Healthcheck
