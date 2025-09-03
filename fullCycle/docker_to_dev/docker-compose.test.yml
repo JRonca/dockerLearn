@@ -1,0 +1,33 @@
+include:
+  - ./external-api/docker-compose.external-api.yaml
+services:
+  web1:
+    extends:
+      file: ./docker-compose.common.yaml
+      service: web
+    ports:
+      - "3000:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+        #restart: true
+
+  db:
+    image: mysql:8.0.30-debian
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=my_database
+    tmpfs:
+      - /var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 30s # Frequencia em que o Healthcheck é executado
+      timeout: 5s # Tempo limite para o Healthcheck
+      retries: 5 # Tentativas antes de considerar o container como unhealthy
+      start_period: 10s # Tempo de espera antes de iniciar o Healthcheck
+#     networks:
+#       - external-api_default
+
+# networks:
+#   external-api_default:
+#     external: true
