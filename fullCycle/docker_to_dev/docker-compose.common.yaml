@@ -1,0 +1,22 @@
+services:
+  web:
+    build:
+      args:
+        - NODEMON_VERSION=${NODEMON_VERSION:-3.1.7}
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - .:/home/node/app
+    # ports:
+    #   - "3000:3000"
+    env_file:
+      - .env
+      # - path: .env.override
+      #   required: false
+    # depends_on:
+    #   db:
+    #     condition: service_healthy
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    # networks:
+    #   - external-api_default
